@@ -1,14 +1,3 @@
-// const { checkToken } = require("./middleware");
+const passport = require("passport");
 
-exports.isAuthenticated = (req, res, next) => {
-  try {
-    const jwtRequired = passport.authenticate('jwt', { session: false });
-    if (jwtRequired) {
-     next(); 
-    } else {
-      res.status(401).send('Unauthorized');
-    }
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
+exports.jwtRequired = passport.authenticate("jwt", { session: false });

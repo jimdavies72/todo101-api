@@ -1,14 +1,14 @@
+const passport = require("passport");
 const { Router } = require("express");
+const { addTestString, getTestStrings } = require("./testControllers");
 const {
-  addTestString,
-  getTestString,
-} = require("./testControllers");
-const { isAuthenticated } = require("../middleware");
+  jwtRequired
+} = require('../middleware');
 
 const testRouter = Router();
 
-testRouter.get("/test", getTestString);
-testRouter.post("/test",  addTestString);
-testRouter.put("/test", isAuthenticated, getTestString);
+testRouter.get("/test", getTestStrings);
+testRouter.post("/test", addTestString);
+testRouter.put("/test", jwtRequired, getTestStrings);
 
 module.exports = testRouter;

@@ -1,13 +1,16 @@
 require("dotenv").config();
+const logger = require("morgan");
 const express = require("express");
 const session = require("cookie-session");
-const passport = require("./middleware/passport");
+const passport = require("../middleware/passport");
 const helmet = require("helmet");
 const hpp = require("hpp");
 const csurf = require("csurf");
 const rateLimit = require("express-rate-limit");
 
-const authRouter = require("./auth/authRoutes");
+const authRouter = require("../auth/authRoutes");
+const testRouter = require("../test/testRoutes");
+const unmatchedRouter = require("../unmatched/unmatchedRoutes");
 
 const limiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
@@ -18,6 +21,9 @@ const limiter = rateLimit({
 
 exports.createServer = () => {
   const app = express();
+  app.use(express.json());
+  
+  app.use(logger("dev"));
 
   app.use(
     session({
@@ -30,15 +36,19 @@ exports.createServer = () => {
   // security settings
   app.use(helmet());
   app.use(hpp());
+  app.use(limiter);
 
   app.use(passport.initialize());
+  
+  
   app.use("/auth", authRouter);
-  app.use(csurf());
-  app.use(limiter);
+  app.use(testRouter);
   //TODO: add new routes here:
-
+  
   //default for unmatched routes
   app.use(unmatchedRouter);
-
+  
+  app.use(csurf());
+  
   return app;
 };
