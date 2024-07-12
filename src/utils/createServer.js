@@ -1,8 +1,8 @@
 require("dotenv").config();
 const logger = require("morgan");
 const express = require("express");
-const session = require("cookie-session");
-const passport = require("../middleware/passport");
+//const session = require("cookie-session");
+//const passport = require("../middleware/passport");
 const helmet = require("helmet");
 const hpp = require("hpp");
 const csurf = require("csurf");
@@ -10,6 +10,7 @@ const rateLimit = require("express-rate-limit");
 
 const authRouter = require("../auth/authRoutes");
 const testRouter = require("../test/testRoutes");
+const taskRouter = require("../task/taskRoutes");
 const unmatchedRouter = require("../unmatched/unmatchedRoutes");
 
 const limiter = rateLimit({
@@ -25,24 +26,25 @@ exports.createServer = () => {
   
   app.use(logger("dev"));
 
-  app.use(
-    session({
-      name: "session",
-      secret: process.env.COOKIE_SECRET,
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-    })
-  );
+  // app.use(
+  //   session({
+  //     name: "session",
+  //     secret: process.env.COOKIE_SECRET,
+  //     expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+  //   })
+  // );
 
   // security settings
   app.use(helmet());
   app.use(hpp());
   app.use(limiter);
 
-  app.use(passport.initialize());
+  //app.use(passport.initialize());
   
   
   app.use("/auth", authRouter);
   app.use(testRouter);
+  app.use(taskRouter);
   //TODO: add new routes here:
   
   //default for unmatched routes
