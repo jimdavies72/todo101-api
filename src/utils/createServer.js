@@ -3,6 +3,7 @@ const logger = require("morgan");
 const express = require("express");
 //const session = require("cookie-session");
 //const passport = require("../middleware/passport");
+const cors = require("cors");
 const helmet = require("helmet");
 const hpp = require("hpp");
 const csurf = require("csurf");
@@ -23,7 +24,7 @@ const limiter = rateLimit({
 exports.createServer = () => {
   const app = express();
   app.use(express.json());
-  
+
   app.use(logger("dev"));
 
   // app.use(
@@ -35,6 +36,7 @@ exports.createServer = () => {
   // );
 
   // security settings
+  app.use(cors());
   app.use(helmet());
   app.use(hpp());
   app.use(limiter);
