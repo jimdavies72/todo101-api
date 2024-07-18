@@ -1,19 +1,22 @@
+const { validateAccessToken } = require("../middleware/auth0.middleware");
 const { Router } = require("express");
 
-const { 
-  getMyTasks, 
-  addTask, 
+const {
+  getMyTasks,
+  addTask,
   updateSingleTask,
-  updateMultiTasks, 
+  updateMultiTasks,
   deleteSingleTask,
   deleteMultiTasks,
 } = require("./taskControllers");
 
-//const { 
-  //jwtRequired,
+//const {
+//jwtRequired,
 //} = require("../middleware");
 
 const taskRouter = Router();
+
+taskRouter.use("*", validateAccessToken);
 
 taskRouter.put("/tasks", getMyTasks);
 taskRouter.post("/tasks", addTask);

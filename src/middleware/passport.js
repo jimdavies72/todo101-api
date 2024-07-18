@@ -15,17 +15,17 @@ const auth0Strategy = new Auth0Strategy(
   }
 );
 
-const jwtStrategy = new JwtStrategy(
-  {
-    jwtFromRequest: (req) => req.session.jwt,
-    secretOrKey: process.env.JWT_SECRET_KEY,
-  },
-  (payload, done) => {
-    return done(null, payload);
-  }
-);
+// const jwtStrategy = new JwtStrategy(
+//   {
+//     jwtFromRequest: (req) => req.session.jwt,
+//     secretOrKey: process.env.JWT_SECRET_KEY,
+//   },
+//   (payload, done) => {
+//     return done(null, payload);
+//   }
+// );
 
 passport.use(auth0Strategy);
-passport.use(jwtStrategy);
+//passport.use(jwtStrategy);
 
 module.exports = passport;

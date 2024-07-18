@@ -1,5 +1,5 @@
 {
-  "name": "express-serv-template",
+  "name": "todo101-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,9 @@
     "test": "jest --detectOpenHandles",
     "testone": "jest -t",
     "watch": "jest --watchAll",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "crypto": "node src/utils/genCrypto.js",
+    "token": "node src/utils/genToken.js"
   },
   "keywords": [],
   "author": "",
@@ -21,12 +23,13 @@
     "supertest": "^7.0.0"
   },
   "dependencies": {
-    "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "csurf": "^1.11.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-oauth2-jwt-bearer": "^1.6.0",
     "express-rate-limit": "^7.3.1",
+    "express-session": "^1.18.0",
     "helmet": "^7.1.0",
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.2",
@@ -34,6 +37,7 @@
     "morgan": "^1.10.0",
     "passport": "^0.7.0",
     "passport-auth0": "^1.4.4",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "request": "^2.88.2"
   }
 }
